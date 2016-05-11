@@ -2,7 +2,6 @@ package exercises.algorithm;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Stack;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
