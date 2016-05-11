@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BreadthFirstTest {
+public class TransversalDepthFirstTest {
 	private Node<Person> root;
 
 	@Test
@@ -16,11 +16,18 @@ public class BreadthFirstTest {
 		tryFindElment("G");
 		tryFindElment("A");
 	}
+	
+	@Test
+	public void visitAllRecursive() {
+		TransversalDepthFirst alg = new TransversalDepthFirst();
+		assertEquals("ABDECFG", alg.visit( root, p -> p.getName() ) );
+		System.out.println(String.format("BigO %s:%d for:visit",alg.getName() ,alg.getBigOstepCounter()));
+	}
 
 	private void tryFindElment(String name) {
-		TransversalExecutor bdf = new TransversalExecutor();
-		assertEquals(name, bdf.findRecursive( root, p -> p.getName().equals(name) ).getName());
-		System.out.println(String.format("BigO counter:%d for:%s", bdf.getBigOstepCounter(), name));
+		TransversalDepthFirst alg = new TransversalDepthFirst();
+		assertEquals(name, alg.findRecursive( root, p -> p.getName().equals(name) ).getName());
+		System.out.println(String.format("BigO %s:%d for:%s", alg.getName(), alg.getBigOstepCounter(), name));
 	}
 
 	@Before
