@@ -18,9 +18,23 @@ public class TransversalDepthFirstTest {
 	}
 	
 	@Test
-	public void visitAllRecursive() {
+	public void visitAllPreOrder() {
 		TransversalDepthFirst alg = new TransversalDepthFirst();
-		assertEquals("ABDECFG", alg.visit( root, p -> p.getName() ) );
+		assertEquals("ABDECFG", alg.visitPreOrder( root, p -> p.getName() ) );
+		System.out.println(String.format("BigO %s:%d for:visit",alg.getName() ,alg.getBigOstepCounter()));
+	}
+
+	@Test
+	public void visitAllInOrder() {
+		TransversalDepthFirst alg = new TransversalDepthFirst();
+		assertEquals("BDEACFG", alg.visitInOrder( root, p -> p.getName() ) );
+		System.out.println(String.format("BigO %s:%d for:visit",alg.getName() ,alg.getBigOstepCounter()));
+	}
+
+	@Test
+	public void visitAllPostOrder() {
+		TransversalDepthFirst alg = new TransversalDepthFirst();
+		assertEquals("BDECFGA", alg.visitPostOrder( root, p -> p.getName() ) );
 		System.out.println(String.format("BigO %s:%d for:visit",alg.getName() ,alg.getBigOstepCounter()));
 	}
 

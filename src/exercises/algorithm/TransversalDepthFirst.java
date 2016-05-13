@@ -44,19 +44,47 @@ public class TransversalDepthFirst {
 	public int getBigOstepCounter() {
 		return bigOstepCounter;
 	}
-	public <T> String visit(Node<T> root, Function<T, String> mapper ) {
+	public <T> String visitPreOrder(Node<T> root, Function<T, String> mapper ) {
 		visited="";
 		bigOstepCounter=0;
-		visitImpl(root, mapper);
+		visitPreOrderImpl(root, mapper);
 		return visited;
 	}
-	private <T> void visitImpl(Node<T> root, Function<T, String> mapper) {
+	private <T> void visitPreOrderImpl(Node<T> root, Function<T, String> mapper) {
 		bigOstepCounter++;
 		if (root == null)
 			return;
 		visited += mapper.apply(root.value);
-		visitImpl(root.getChildLeft(),mapper);
-		visitImpl(root.getChildRight(),mapper);
+		visitPreOrderImpl(root.getChildLeft(),mapper);
+		visitPreOrderImpl(root.getChildRight(),mapper);
+	}
+	public <T> String visitInOrder(Node<T> root, Function<T, String> mapper ) {
+		visited="";
+		bigOstepCounter=0;
+		visitInOrderImpl(root, mapper);
+		return visited;
+	}
+	private <T> void visitInOrderImpl(Node<T> root, Function<T, String> mapper) {
+		bigOstepCounter++;
+		if (root == null)
+			return;
+		visitPreOrderImpl(root.getChildLeft(),mapper);
+		visited += mapper.apply(root.value);
+		visitPreOrderImpl(root.getChildRight(),mapper);
+	}
+	public <T> String visitPostOrder(Node<T> root, Function<T, String> mapper ) {
+		visited="";
+		bigOstepCounter=0;
+		visitPostOrderImpl(root, mapper);
+		return visited;
+	}
+	private <T> void visitPostOrderImpl(Node<T> root, Function<T, String> mapper) {
+		bigOstepCounter++;
+		if (root == null)
+			return;
+		visitPreOrderImpl(root.getChildLeft(),mapper);
+		visitPreOrderImpl(root.getChildRight(),mapper);
+		visited += mapper.apply(root.value);
 	}
 	public String getName() {
 		return "DPF";
