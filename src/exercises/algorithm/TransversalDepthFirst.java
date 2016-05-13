@@ -47,44 +47,53 @@ public class TransversalDepthFirst {
 	public <T> String visitPreOrder(Node<T> root, Function<T, String> mapper ) {
 		visited="";
 		bigOstepCounter=0;
-		visitPreOrderImpl(root, mapper);
+		class Algorithm {
+			private <W> void visitPreOrderImpl(Node<W> root, Function<W, String> mapper) {
+				bigOstepCounter++;
+				if (root == null)
+					return;
+				visited += mapper.apply(root.value);
+				visitPreOrderImpl(root.getChildLeft(),mapper);
+				visitPreOrderImpl(root.getChildRight(),mapper);
+			}
+		}
+		Algorithm alg = new Algorithm();
+		alg.visitPreOrderImpl(root, mapper);
 		return visited;
-	}
-	private <T> void visitPreOrderImpl(Node<T> root, Function<T, String> mapper) {
-		bigOstepCounter++;
-		if (root == null)
-			return;
-		visited += mapper.apply(root.value);
-		visitPreOrderImpl(root.getChildLeft(),mapper);
-		visitPreOrderImpl(root.getChildRight(),mapper);
 	}
 	public <T> String visitInOrder(Node<T> root, Function<T, String> mapper ) {
 		visited="";
 		bigOstepCounter=0;
-		visitInOrderImpl(root, mapper);
+		class Algorithm {
+			private <W> void visitInOrderInner(Node<W> root, Function<W, String> mapper) {
+				bigOstepCounter++;
+				if (root == null)
+					return; 
+				visitInOrderInner(root.getChildLeft(),mapper);
+				visited += mapper.apply(root.value);
+				visitInOrderInner(root.getChildRight(),mapper);
+			}
+		}
+		Algorithm alg = new Algorithm();
+		alg.visitInOrderInner(root, mapper);
 		return visited;
-	}
-	private <T> void visitInOrderImpl(Node<T> root, Function<T, String> mapper) {
-		bigOstepCounter++;
-		if (root == null)
-			return;
-		visitPreOrderImpl(root.getChildLeft(),mapper);
-		visited += mapper.apply(root.value);
-		visitPreOrderImpl(root.getChildRight(),mapper);
 	}
 	public <T> String visitPostOrder(Node<T> root, Function<T, String> mapper ) {
 		visited="";
 		bigOstepCounter=0;
-		visitPostOrderImpl(root, mapper);
+		class Algorithm {
+			private <W> void visitPostOrder(Node<W> root, Function<W, String> mapper) {
+				bigOstepCounter++;
+				if (root == null)
+					return;
+				visitPostOrder(root.getChildLeft(),mapper);
+				visitPostOrder(root.getChildRight(),mapper);
+				visited += mapper.apply(root.value);
+			}
+		}
+		Algorithm alg = new Algorithm();
+		alg.visitPostOrder(root, mapper);
 		return visited;
-	}
-	private <T> void visitPostOrderImpl(Node<T> root, Function<T, String> mapper) {
-		bigOstepCounter++;
-		if (root == null)
-			return;
-		visitPreOrderImpl(root.getChildLeft(),mapper);
-		visitPreOrderImpl(root.getChildRight(),mapper);
-		visited += mapper.apply(root.value);
 	}
 	public String getName() {
 		return "DPF";
