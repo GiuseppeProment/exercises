@@ -2,6 +2,8 @@ package exercises.functional;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -32,11 +34,20 @@ public class PersonTest {
 
 	@Test
 	public void getSortedNames() {
-		Person[] list = persons
+		String[] names = persons
 			.stream()
 			.sorted((x,y) -> x.name.compareTo(y.name) )
 			.map(p -> p.name )
-			.toArray(Person[]::new);
+			.toArray(String[]::new);
+		Assert.assertArrayEquals(
+				new String[]{
+						"Anselmo Proment",
+						"Dirce Rosa da Silva Proment",
+						"Giuseppe Proment",
+						"Leonardo da Silva Proment",
+						"Mônica Proment",
+						"Ricardo Proment"
+						}, names);
 	}
 
 	@Before
