@@ -1,8 +1,7 @@
 package exercises.mockito;
 
-public class Pan {
+interface Pan {
 
-	public void increaseHeat(int degrees ) {
-	}
+	void increaseHeat(int degrees );
 
 }
