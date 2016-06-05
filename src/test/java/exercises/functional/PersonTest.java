@@ -1,17 +1,13 @@
 package exercises.functional;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Function;
-import java.util.function.IntFunction;
-import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,9 +33,10 @@ public class PersonTest {
 		String[] names = persons
 			.stream()
 			.sorted((x,y) -> x.name.compareTo(y.name) )
-			.map(p -> p.name )
+			.map(p -> p.name ) 
 			.toArray(String[]::new);
-		Assert.assertArrayEquals(
+		
+		assertArrayEquals(
 				new String[]{
 						"Anselmo Proment",
 						"Dirce Rosa da Silva Proment",
@@ -50,6 +47,64 @@ public class PersonTest {
 						}, names);
 	}
 
+	@Test
+	public void mapReduceOptionalReturn() {
+
+		persons
+			.stream()
+			.mapToInt( p -> p.getAge() )
+			.reduce( (a,b) -> a+b )
+			.getAsInt();
+		
+		persons
+			.stream()
+			.mapToInt( p -> p.getAge() )
+			.reduce( Integer::sum )
+			.getAsInt();
+		
+		assertThat(
+			persons
+				.stream()
+				.map( p -> p.name )
+				.reduce((a,b) -> a+b)
+				.orElseThrow( IllegalStateException::new ),
+		is ( equalTo ( "xxx" ) ) );
+	}
+
+	@Test
+	public void mapReduce() {
+
+		persons
+			.stream()
+			.mapToInt( p -> p.getAge() )
+			.reduce(0, (a,b) -> a+b );
+
+		persons
+			.stream()
+			.mapToInt( p -> p.getAge() )
+			.reduce(0, Integer::sum );
+
+		persons
+			.stream()
+			.map( p -> p.name )
+			.reduce("", (a,b) -> a+b);
+	}
+
+	@Test
+	public void mapReduceCompleteForm() {
+		persons
+			.stream()
+			.reduce( 0, (sum,p)-> sum + p.getAge(), Integer::sum );
+	}
+
+	@Test
+	public void mutableReduce_Collect() {
+		persons
+			.parallelStream()
+			.map(p->p.name)
+			.collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+	}
+	
 	@Before
 	public void setup() {
 		persons = new LinkedList<>();
