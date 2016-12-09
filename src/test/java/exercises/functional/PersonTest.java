@@ -62,13 +62,6 @@ public class PersonTest {
 			.reduce( Integer::sum )
 			.getAsInt();
 		
-		assertThat(
-			persons
-				.stream()
-				.map( p -> p.name )
-				.reduce((a,b) -> a+b)
-				.orElseThrow( IllegalStateException::new ),
-		is ( equalTo ( "xxx" ) ) );
 	}
 
 	@Test
