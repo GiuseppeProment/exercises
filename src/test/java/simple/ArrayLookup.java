@@ -23,12 +23,12 @@ public class ArrayLookup {
 
 	// O(n)
 	private int findMissingElementMath(int[] numbers) {
-		int sum = Arrays
-			.stream(numbers)
-			.reduce( Integer::sum )
-			.getAsInt();
-		int sumAll = (numbers.length+1) * numbers.length / 2;
-		return sumAll - sum;
+		return 
+			(numbers.length+1) * numbers.length / 2 - 
+			Arrays
+				.stream(numbers)
+				.reduce( Integer::sum )
+				.getAsInt();
 	}
 
 	// O(2n) => O(n)
