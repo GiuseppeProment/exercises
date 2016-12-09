@@ -31,7 +31,7 @@ public class ArrayLookup {
 		return sumAll - sum;
 	}
 
-	// O(2n) 
+	// O(2n) => O(n)
 	private int findMissingElementIterative(int[] numbers ) {
 		BitSet bs = new BitSet( numbers.length);
 		// O(n)
